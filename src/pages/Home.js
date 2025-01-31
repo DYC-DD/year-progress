@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../styles/Home.css";
-import Carousel from "./List";
+import ProgressBar from "./ProgressBar";
 
 const Home = () => {
   const [displayedText, setDisplayedText] = useState("");
@@ -139,7 +139,7 @@ const Home = () => {
 
         <section ref={section2Ref} className="snap-section">
           <div className="card-content">
-            <Carousel />
+            <ProgressBar />
           </div>
         </section>
 
