@@ -8,7 +8,6 @@
   margin: 0;
   padding: 50px;
   height: 100vh;
-  /* 你自己的背景設定 */
 }
 
 .progress-wrapper {
@@ -30,7 +29,6 @@
   background: transparent;
 }
 
-/* 這裡是讓文字本身帶有漸層，並且由下往上移動 */
 .progress-text {
   position: absolute;
   top: 0;
@@ -44,23 +42,12 @@
 
   font-family: "Ubuntu Mono", sans-serif;
   font-size: 5em;
-  color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  text-shadow: 0 0 15px #505050, 0 0 30px #808080, 0 0 60px #bbbbbb;
   user-select: none;
 
-  /* 
-    調整你的漸層：以 "to top" 代表由下往上。 
-    你可以換成任何顏色，例如: linear-gradient(to top, #ffe68f, #ff0052)
-  */
-  background: linear-gradient(
-    to top,
-    hsla(0, 0%, 100%, 0),
-    hsla(0, 0%, 100%, 0.6) 70%
-  );
-
+  background: linear-gradient(hsla(0, 0%, 100%, 0.6), hsla(0, 0%, 100%, 0) 70%)
+    no-repeat center;
   -webkit-background-clip: text;
   background-clip: text;
-
-  /* 先預設 background-size，可增加拉伸空間 */
-  background-size: 100% 200%;
-  background-repeat: no-repeat;
 }
