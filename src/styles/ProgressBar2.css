@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css?family=Ubuntu+Mono:700");
+
+.progress-container {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+  position: relative;
+  padding: 5px;
+  width: 800px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.progress-bar {
+  background: #fff;
+  border-radius: 100px;
+  height: 30px;
+  transition: width 2s ease-in-out;
+  box-shadow: 0 10px 40px -10px #fff;
+}
+
+.progress-text {
+  position: absolute;
+  right: 10px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: "Ubuntu Mono", sans-serif;
+}

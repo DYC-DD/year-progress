@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../styles/Home.css";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "./ProgressBar2";
 
 const Home = () => {
   const [displayedText, setDisplayedText] = useState("");
