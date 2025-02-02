@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Ubuntu+Mono:700");
 
-.progress-container {
+.progress-container2 {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 100px;
   position: relative;
@@ -12,7 +12,7 @@
   justify-content: flex-start;
 }
 
-.progress-bar {
+.progress-bar2 {
   background: #fff;
   border-radius: 100px;
   height: 30px;
@@ -20,7 +20,7 @@
   box-shadow: 0 10px 40px -10px #fff;
 }
 
-.progress-text {
+.progress-text2 {
   position: absolute;
   right: 10px;
   color: #fff;

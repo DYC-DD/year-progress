@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../styles/Home.css";
-import ProgressBar from "./ProgressBar2";
+import ProgressBar from "./ProgressBar";
+import ProgressBar2 from "./ProgressBar2";
 
 const Home = () => {
   const [displayedText, setDisplayedText] = useState("");
@@ -36,6 +37,7 @@ const Home = () => {
   const section1Ref = useRef(null);
   const section2Ref = useRef(null);
   const section3Ref = useRef(null);
+  const section4Ref = useRef(null);
 
   useEffect(() => {
     const handleTyping = () => {
@@ -94,14 +96,19 @@ const Home = () => {
   }, [scrollTimeout]);
 
   const snapToNearestSection = () => {
-    if (!section1Ref.current || !section2Ref.current || !section3Ref.current)
+    if (
+      !section1Ref.current ||
+      !section2Ref.current ||
+      !section3Ref.current ||
+      !section4Ref.current
+    )
       return;
 
     const scrollY = window.scrollY;
     const scrollHeight = document.documentElement.scrollHeight;
     const viewportHeight = window.innerHeight;
 
-    const lastSectionOffset = section3Ref.current.offsetTop;
+    const lastSectionOffset = section4Ref.current.offsetTop;
 
     if (scrollY > lastSectionOffset + 50) {
       return;
@@ -111,6 +118,7 @@ const Home = () => {
       section1Ref.current.offsetTop,
       section2Ref.current.offsetTop,
       section3Ref.current.offsetTop,
+      section4Ref.current.offsetTop,
     ];
 
     let closestIndex = 0;
@@ -144,6 +152,12 @@ const Home = () => {
         </section>
 
         <section ref={section3Ref} className="snap-section">
+          <div className="card-content">
+            <ProgressBar2 />
+          </div>
+        </section>
+
+        <section ref={section4Ref} className="snap-section">
           <div className="text-content">
             <p>
               <br />

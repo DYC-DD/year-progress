@@ -13,9 +13,9 @@ const ProgressBar2 = () => {
   }, []);
 
   return (
-    <div className="progress-container">
-      <div className="progress-bar" style={{ width: `${progress}%` }}></div>
-      <span className="progress-text">{progress}%</span>
+    <div className="progress-container2">
+      <div className="progress-bar2" style={{ width: `${progress}%` }}></div>
+      <span className="progress-text2">{progress}%</span>
     </div>
   );
 };
