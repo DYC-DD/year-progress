@@ -17,14 +17,14 @@
   border-radius: 100px;
   height: 30px;
   transition: width 2s ease-in-out;
-  box-shadow: 0 10px 40px -10px #fff;
+  box-shadow: 0 0 15px #505050, 0 0 30px #808080, 0 0 60px #bbbbbb;
 }
 
 .progress-text2 {
   position: absolute;
   right: 10px;
   color: #fff;
-  font-size: 20px;
+  font-size: 30px;
   font-weight: bold;
   font-family: "Ubuntu Mono", sans-serif;
 }

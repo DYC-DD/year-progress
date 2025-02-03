@@ -109,6 +109,7 @@ const Home = () => {
         <section ref={section1Ref} className="snap-section">
           <div className="card-content">
             <ProgressBar2 />
+            <p>Dividing the year into 100 pieces.</p>
           </div>
         </section>
 

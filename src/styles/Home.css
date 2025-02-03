@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Ubuntu+Mono:700");
+
 .noto-sans-sc {
   font-family: "Noto Sans SC", sans-serif;
   font-optical-sizing: auto;
@@ -36,16 +38,17 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .home main p {
-  width: 1000px;
   margin-inline: auto;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   margin-bottom: 0;
   text-align: center;
-  color: #ffffff;
-  font-size: 20px;
+  color: #585858;
+  font-size: 24px;
+  font-family: "Ubuntu Mono", sans-serif;
 }
 
 body.footer-pull .home main {
@@ -60,7 +63,7 @@ body.footer-pull .home main {
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 2rem 2rem 1rem 2rem;
+  padding: 0rem 2rem 1.5rem 2rem;
   background: #ffffff;
   color: #181a1b;
   font-size: 72px;
@@ -92,5 +95,9 @@ body.footer-pull .home main {
 
   .home footer {
     font-size: 26px;
+  }
+
+  .annotation {
+    font-size: 10px;
   }
 }
