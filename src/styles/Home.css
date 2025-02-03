@@ -5,16 +5,6 @@
   font-style: normal;
 }
 
-h1 {
-  color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  font-size: 70px;
-  text-shadow: 0 0 15px #505050, 0 0 30px #808080, 0 0 60px #bbbbbb;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -78,16 +68,10 @@ body.footer-pull .home main {
   font-weight: 900;
 }
 
-.typing-text {
-  overflow: hidden;
-  white-space: nowrap;
-  font-size: 70px;
-  animation: blink-caret 0.7s step-end infinite;
-}
-
 .snap-section {
   position: relative;
   margin-top: 0px;
+  scroll-margin-top: 50px;
 }
 
 @keyframes blink-caret {
@@ -107,10 +91,6 @@ body.footer-pull .home main {
   }
 
   .home footer {
-    font-size: 38px;
-  }
-
-  .typing-text {
-    font-size: 40px;
+    font-size: 26px;
   }
 }

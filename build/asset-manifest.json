@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Year_Progress_Bar/static/css/main.9ba08249.css",
+    "main.js": "/Year_Progress_Bar/static/js/main.65b487e7.js",
+    "index.html": "/Year_Progress_Bar/index.html",
+    "main.9ba08249.css.map": "/Year_Progress_Bar/static/css/main.9ba08249.css.map",
+    "main.65b487e7.js.map": "/Year_Progress_Bar/static/js/main.65b487e7.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9ba08249.css",
+    "static/js/main.65b487e7.js"
+  ]
+}
