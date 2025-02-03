@@ -5,7 +5,7 @@
   border-radius: 100px;
   position: relative;
   padding: 5px;
-  width: 800px;
+  width: 80%;
   height: 40px;
   display: flex;
   align-items: center;
@@ -27,4 +27,18 @@
   font-size: 20px;
   font-weight: bold;
   font-family: "Ubuntu Mono", sans-serif;
+}
+
+@media screen and (max-width: 768px) {
+  .progress-container2 {
+    width: 100%;
+    height: 30px;
+  }
+  .progress-bar2 {
+    height: 20px;
+  }
+  .progress-text2 {
+    font-size: 22px;
+    right: 10px;
+  }
 }
