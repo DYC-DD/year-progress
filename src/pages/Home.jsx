@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../styles/Home.css";
-import ProgressBar from "./ProgressBar";
-import ProgressBar2 from "./ProgressBar2";
+import ProgressBar from "../components/ProgressBar";
+import ProgressBar2 from "../components/ProgressBar2";
 
 const Home = () => {
   const [scrollTimeout, setScrollTimeout] = useState(null);
@@ -25,6 +25,7 @@ const Home = () => {
   const section2Ref = useRef(null);
   const section3Ref = useRef(null);
 
+  // 偵測 footer 是否進入視窗，變更 footer 文字
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -47,6 +48,7 @@ const Home = () => {
     };
   }, []);
 
+  // 當停止滾動後，自動對齊最近的區塊
   useEffect(() => {
     const handleScroll = () => {
       if (scrollTimeout) {
@@ -59,7 +61,6 @@ const Home = () => {
     };
 
     window.addEventListener("scroll", handleScroll);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
       if (scrollTimeout) clearTimeout(scrollTimeout);
@@ -71,15 +72,6 @@ const Home = () => {
       return;
 
     const scrollY = window.scrollY;
-    const scrollHeight = document.documentElement.scrollHeight;
-    const viewportHeight = window.innerHeight;
-
-    const lastSectionOffset = section3Ref.current.offsetTop;
-
-    if (scrollY > lastSectionOffset + 50) {
-      return;
-    }
-
     const sections = [
       section1Ref.current.offsetTop,
       section2Ref.current.offsetTop,
