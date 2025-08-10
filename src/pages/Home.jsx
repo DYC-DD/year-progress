@@ -1,54 +1,14 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import DayTrack from "../components/DayTrack/DayTrack";
+import YearPct from "../components/YearPct/YearPct";
 import "../styles/Home.css";
-import ProgressBar from "../components/ProgressBar";
-import ProgressBar2 from "../components/ProgressBar2";
 
 const Home = () => {
   const [scrollTimeout, setScrollTimeout] = useState(null);
-  const [footerText, setFooterText] = useState("Time is money.");
-
-  const footerTexts = [
-    `“Time is money.”`,
-    `“Time waits for no one.”`,
-    `“Lost time is never found again.”`,
-    `“Make time, not excuses.”`,
-    `“Time is more valuable than money.”`,
-    `“Time is life.”`,
-    `“Nothing is more valuable than time.”`,
-    `“Time once lost, is lost forever.”`,
-    `“Time is wealth.”`,
-    `“Every moment is a fresh beginning.”`,
-    `“Wasting time is stealing from yourself.”`,
-  ];
 
   const section1Ref = useRef(null);
   const section2Ref = useRef(null);
-  const section3Ref = useRef(null);
 
-  // 偵測 footer 是否進入視窗，變更 footer 文字
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const randomIndex = Math.floor(Math.random() * footerTexts.length);
-            setFooterText(footerTexts[randomIndex]);
-          }
-          document.body.classList.toggle("footer-pull", entry.isIntersecting);
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    const footer = document.querySelector("#footer");
-    if (footer) observer.observe(footer);
-
-    return () => {
-      if (footer) observer.unobserve(footer);
-    };
-  }, []);
-
-  // 當停止滾動後，自動對齊最近的區塊
   useEffect(() => {
     const handleScroll = () => {
       if (scrollTimeout) {
@@ -68,14 +28,12 @@ const Home = () => {
   }, [scrollTimeout]);
 
   const snapToNearestSection = () => {
-    if (!section1Ref.current || !section2Ref.current || !section3Ref.current)
-      return;
+    if (!section1Ref.current || !section2Ref.current) return;
 
     const scrollY = window.scrollY;
     const sections = [
       section1Ref.current.offsetTop,
       section2Ref.current.offsetTop,
-      section3Ref.current.offsetTop,
     ];
 
     let closestIndex = 0;
@@ -96,28 +54,23 @@ const Home = () => {
   };
 
   return (
-    <div className="home noto-sans-sc">
-      <main>
-        <section ref={section1Ref} className="snap-section">
-          <div className="card-content">
-            <ProgressBar2 />
-            <p>Dividing the year into 100 pieces.</p>
+    <div className="home-page font-noto-sans-sc">
+      <main className="home-page__main">
+        <section ref={section1Ref} className="home-page__section">
+          <div className="home-page__card">
+            <YearPct />
+            <p className="home-page__description">
+              Dividing the year into 100 pieces.
+            </p>
           </div>
         </section>
 
-        <section ref={section2Ref} className="snap-section">
-          <div className="card-content">
-            <ProgressBar />
+        <section ref={section2Ref} className="home-page__section">
+          <div className="home-page__card">
+            <DayTrack />
           </div>
         </section>
-
-        <section
-          ref={section3Ref}
-          className="snap-section"
-          style={{ height: "100vh" }}
-        ></section>
       </main>
-      <footer id="footer">{footerText}</footer>
     </div>
   );
 };

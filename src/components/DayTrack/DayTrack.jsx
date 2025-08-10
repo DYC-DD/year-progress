@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "../styles/ProgressBar.css";
+import "./DayTrack.css";
 
-const ProgressBar = () => {
+const DayTrack = () => {
   const currentYear = new Date().getFullYear();
   const isLeapYear =
     (currentYear % 4 === 0 && currentYear % 100 !== 0) ||
@@ -41,10 +41,10 @@ const ProgressBar = () => {
   }, [value, dayOfYear]);
 
   return (
-    <div className="progress-container">
-      <div className="progress-wrapper">
-        <progress max={maxDays} value={value} className="my-progress" />
-        <div className="progress-text">
+    <div className="day-track-container">
+      <div className="day-track-wrapper">
+        <progress max={maxDays} value={value} className="day-track-progress" />
+        <div className="day-track-text">
           {value} / {maxDays}
         </div>
       </div>
@@ -52,4 +52,4 @@ const ProgressBar = () => {
   );
 };
 
-export default ProgressBar;
+export default DayTrack;

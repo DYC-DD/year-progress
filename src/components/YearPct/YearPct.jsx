@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import "../styles/ProgressBar2.css";
+import { useEffect, useState } from "react";
+import "./YearPct.css";
 
-const ProgressBar2 = () => {
+const YearPct = () => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -13,11 +13,11 @@ const ProgressBar2 = () => {
   }, []);
 
   return (
-    <div className="progress-container2">
-      <div className="progress-bar2" style={{ width: `${progress}%` }}></div>
-      <span className="progress-text2">{progress}%</span>
+    <div className="year-pct-container">
+      <div className="year-pct-bar" style={{ width: `${progress}%` }}></div>
+      <span className="year-pct-text">{progress}%</span>
     </div>
   );
 };
 
-export default ProgressBar2;
+export default YearPct;
