@@ -1,0 +1,236 @@
+@import url("https://fonts.googleapis.com/css?family=Ubuntu+Mono:700");
+
+.doy {
+  position: relative;
+  width: min(960px, 86vw);
+  margin: 0 auto;
+  padding-block: clamp(40px, 10vh, 100px);
+}
+
+.doy-grid-box {
+  --gap: 14px;
+  --size: 6px;
+  --head-fs: 12px;
+  --grid-w: calc(var(--cols) * var(--size) + (var(--cols) - 1) * var(--gap));
+  position: relative;
+  display: block;
+  width: var(--grid-w);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.doy-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), var(--size));
+  grid-auto-rows: var(--size);
+  gap: var(--gap);
+  justify-content: start;
+}
+
+.doy-dot {
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: transparent;
+  transform: scale(1);
+}
+.doy-dot-pad {
+  opacity: 0;
+}
+
+.is-active {
+  background: #fff;
+  box-shadow: 0 0 1px #fff, 0 0 8px rgba(255, 255, 255, 0.35);
+  animation: doy-pop var(--pop-dur, 0.2s) ease both;
+  animation-delay: var(--delay, 0ms);
+}
+.is-inactive {
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: none;
+}
+
+@keyframes doy-pop {
+  0% {
+    transform: scale(1);
+    opacity: 0.3;
+    box-shadow: 0 0 2px #fff, 0 0 6px rgba(255, 255, 255, 0.4);
+  }
+  30% {
+    transform: scale(1.8);
+    box-shadow: 0 0 6px #fff, 0 0 12px rgba(255, 255, 255, 0.6),
+      0 0 20px rgba(255, 255, 255, 0.6);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 3px #fff, 0 0 8px rgba(255, 255, 255, 0.35),
+      0 0 20px rgba(255, 255, 255, 0.2);
+  }
+}
+
+.doy-tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(0, 0);
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #fff;
+  color: #000;
+  font-family: "Ubuntu Mono", monospace;
+  font-size: 14px;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+}
+
+.doy-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--grid-w);
+  display: grid;
+  grid-template-columns: repeat(var(--cols), var(--size));
+  grid-auto-rows: var(--size);
+  gap: var(--gap);
+  pointer-events: none;
+  color: #595959;
+  font-family: "Ubuntu Mono", monospace;
+}
+
+.doy-col-head {
+  justify-self: center;
+  align-self: start;
+  transform: translateY(calc(-1 * (var(--gap) + var(--size))));
+  font-size: 12px;
+  opacity: 0;
+  animation: head-left-to-right 0.28s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+.doy-row-head {
+  justify-self: start;
+  align-self: center;
+  transform: translateX(calc(-1 * (var(--gap) + var(--size))));
+  font-size: 12px;
+  opacity: 0;
+  animation: head-top-to-bottom 0.28s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes head-left-to-right {
+  from {
+    transform: translateY(calc(-1 * (var(--gap) + var(--size))))
+      translateX(-8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(calc(-1 * (var(--gap) + var(--size)))) translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes head-top-to-bottom {
+  from {
+    transform: translateX(calc(-1 * (var(--gap) + var(--size))))
+      translateY(-8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(calc(-1 * (var(--gap) + var(--size)))) translateY(0);
+    opacity: 1;
+  }
+}
+
+.doy-meta {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: #9e9e9e;
+  font-family: "Ubuntu Mono", monospace;
+  padding: 0;
+}
+
+.doy-year {
+  position: absolute;
+  top: -60px;
+  left: 0;
+  transform: translate(0, -100%);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  opacity: 0.9;
+}
+
+.doy-right {
+  position: absolute;
+  right: 0;
+  bottom: -60px;
+  transform: translate(0, 100%);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.doy-left-num {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+}
+.doy-left-text {
+  letter-spacing: 0.04em;
+  font-size: 1.2rem;
+  color: #9e9e9e;
+}
+
+.doy[data-cols="14"] .doy-grid-box {
+  --gap: 26px;
+  --size: 4px;
+  --head-fs: 10px;
+}
+
+.doy[data-cols="21"] .doy-grid-box {
+  --gap: 30px;
+  --size: 6px;
+  --head-fs: 12px;
+}
+
+.doy[data-cols="28"] .doy-grid-box {
+  --gap: 30px;
+  --size: 8px;
+  --head-fs: 14px;
+}
+
+@media (max-width: 768px) {
+  .doy-grid-box {
+    --gap: 10px;
+    --size: 5px;
+  }
+  .doy-tooltip {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+  .doy-col-head,
+  .doy-row-head {
+    font-size: var(--head-fs);
+  }
+  .doy[data-cols="14"] .doy-grid-box {
+    --gap: 20px;
+    --size: 4px;
+    --head-fs: 10px;
+  }
+  .doy-year {
+    top: -40px;
+    font-size: 1.4rem;
+  }
+  .doy-right {
+    bottom: -40px;
+  }
+  .doy-left-num {
+    font-size: 1.2rem;
+  }
+  .doy-left-text {
+    font-size: 1rem;
+  }
+}
