@@ -9,43 +9,55 @@ function dateFromDay(year, day) {
   return new Date(year, 0, day);
 }
 const pad2 = (n) => String(n).padStart(2, "0");
-const fmtBadge = (d) =>
-  `${new Intl.DateTimeFormat("en", { weekday: "long" }).format(d)}, ${pad2(
-    d.getMonth() + 1
-  )}.${pad2(d.getDate())}`;
+const fmtBadge = (d) => `${pad2(d.getMonth() + 1)}.${pad2(d.getDate())}`;
 
-const COLS = 14;
+const pickColsByWidth = (w) => {
+  if (w < 980) return 14;
+  if (w < 1400) return 21;
+  return 28;
+};
 
 const DayOfYear = () => {
   const now = useMemo(() => new Date(), []);
   const year = now.getFullYear();
   const wrapRef = useRef(null);
 
-  const { totalDays, todayIndex, daysLeft, cells } = useMemo(() => {
+  const { totalDays, todayIndex, daysLeft, cells, startDow } = useMemo(() => {
     const isLeap = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
     const totalDays = isLeap ? 366 : 365;
     const todayIndex = getDayOfYear(now);
     const daysLeft = totalDays - todayIndex;
-
     const startDow = new Date(year, 0, 1).getDay();
     const totalCells = startDow + totalDays;
-
     const cells = Array.from({ length: totalCells }, (_, i) =>
       i < startDow ? { type: "pad" } : { type: "day", day: i - startDow + 1 }
     );
-
-    return { totalDays, todayIndex, daysLeft, cells };
+    return { totalDays, todayIndex, daysLeft, cells, startDow };
   }, [now, year]);
 
-  const rows = Math.ceil(cells.length / COLS);
+  const [cols, setCols] = useState(() =>
+    pickColsByWidth(typeof window !== "undefined" ? window.innerWidth : 14)
+  );
+  useEffect(() => {
+    const onResize = () => setCols(pickColsByWidth(window.innerWidth));
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  const weeksPerRow = cols / 7;
+  const rows = Math.ceil((startDow + totalDays) / cols);
 
   const [hoverDay, setHoverDay] = useState(null);
+  const [hoverTarget, setHoverTarget] = useState(null);
+  const isPreview = hoverTarget != null;
+  const displayIndex = isPreview ? hoverTarget : todayIndex;
   const [tip, setTip] = useState({ x: 0, y: 0, visible: false });
   const onGridMouseMove = (e) => {
     const rect = wrapRef.current?.getBoundingClientRect();
     if (!rect) return;
-    const TIP_OFFSET_X = 6;
-    const TIP_OFFSET_Y = 6;
+    const TIP_OFFSET_X = 6,
+      TIP_OFFSET_Y = 6;
     setTip({
       x: e.clientX - rect.left + TIP_OFFSET_X,
       y: e.clientY - rect.top + TIP_OFFSET_Y,
@@ -53,48 +65,34 @@ const DayOfYear = () => {
     });
   };
 
-  const targetLeft = hoverDay != null ? totalDays - hoverDay : daysLeft;
+  const targetLeft = isPreview ? totalDays - hoverTarget : daysLeft;
   const [animatedLeft, setAnimatedLeft] = useState(targetLeft);
+
   useEffect(() => {
     let raf = 0;
     const start = performance.now();
     const from = animatedLeft;
     const to = targetLeft;
-    const dur = 300;
-    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+    const dur = isPreview ? 120 : 200; // 預覽快一點，恢復稍慢一點
+    const ease = (t) => 1 - Math.pow(1 - t, 3);
     const step = (ts) => {
       const t = Math.min(1, (ts - start) / dur);
-      const v = Math.round(from + (to - from) * easeOutCubic(t));
-      setAnimatedLeft(v);
+      setAnimatedLeft(Math.round(from + (to - from) * ease(t)));
       if (t < 1) raf = requestAnimationFrame(step);
     };
     raf = requestAnimationFrame(step);
     return () => cancelAnimationFrame(raf);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [targetLeft]);
+  }, [targetLeft, isPreview]);
 
   const hoverLabel =
     hoverDay != null ? fmtBadge(dateFromDay(year, hoverDay)) : null;
 
-  const colHeaders = [
-    "Sun",
-    "Mon",
-    "Tue",
-    "Wed",
-    "Thu",
-    "Fri",
-    "Sat",
-    "Sun",
-    "Mon",
-    "Tue",
-    "Wed",
-    "Thu",
-    "Fri",
-    "Sat",
-  ];
+  const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const colHeaders = Array.from({ length: cols }, (_, i) => weekday[i % 7]);
 
   return (
-    <div className="doy" ref={wrapRef}>
+    <div className="doy" ref={wrapRef} data-cols={cols}>
       {tip.visible && hoverLabel && (
         <div
           className="doy-tooltip"
@@ -105,13 +103,14 @@ const DayOfYear = () => {
           {hoverLabel}
         </div>
       )}
-
       <div
         className="doy-grid-box"
+        style={{ ["--cols"]: cols }}
         onMouseMove={onGridMouseMove}
         onMouseLeave={() => {
           setTip((t) => ({ ...t, visible: false }));
           setHoverDay(null);
+          setHoverTarget(null);
         }}
       >
         {tip.visible && (
@@ -123,7 +122,7 @@ const DayOfYear = () => {
                 style={{
                   gridColumn: i + 1,
                   gridRow: 1,
-                  animationDelay: `${i * 60}ms`,
+                  animationDelay: `${i * 50}ms`,
                 }}
               >
                 {txt}
@@ -139,7 +138,7 @@ const DayOfYear = () => {
                   animationDelay: `${r * 60}ms`,
                 }}
               >
-                {`W${String((r + 1) * 2).padStart(2, "0")}`}
+                {`W${String((r + 1) * weeksPerRow).padStart(2, "0")}`}
               </span>
             ))}
           </div>
@@ -153,27 +152,37 @@ const DayOfYear = () => {
               <span
                 key={`day-${cell.day}`}
                 className={`doy-dot ${
-                  cell.day <= todayIndex ? "is-active" : "is-inactive"
+                  cell.day <= displayIndex ? "is-active" : "is-inactive"
                 }`}
                 style={
-                  cell.day <= todayIndex
-                    ? { ["--delay"]: `${(cell.day - 1) * 40}ms` }
+                  cell.day <= displayIndex
+                    ? {
+                        ["--delay"]: isPreview
+                          ? `${Math.max(cell.day - todayIndex, 0) * 20}ms`
+                          : `${(cell.day - 1) * 20}ms`,
+                      }
                     : undefined
                 }
-                onMouseEnter={() => setHoverDay(cell.day)}
-                onMouseLeave={() => setHoverDay(null)}
+                onMouseEnter={() => {
+                  setHoverDay(cell.day);
+                  if (cell.day > todayIndex) setHoverTarget(cell.day);
+                }}
+                onMouseLeave={() => {
+                  setHoverDay(null);
+                  setHoverTarget(null);
+                }}
                 aria-label={`Day ${cell.day}`}
               />
             )
           )}
         </div>
-      </div>
 
-      <div className="doy-meta">
-        <div className="doy-year">{year}</div>
-        <div className="doy-right">
-          <span className="doy-left-num">{animatedLeft}</span>
-          <span className="doy-left-text">days left</span>
+        <div className="doy-meta">
+          <div className="doy-year">{year}</div>
+          <div className="doy-right">
+            <span className="doy-left-num">{animatedLeft}</span>
+            <span className="doy-left-text">days left</span>
+          </div>
         </div>
       </div>
     </div>
