@@ -2,10 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import DayOfYear from "../components/DayOfYear/DayOfYear";
 import DayTrack from "../components/DayTrack/DayTrack";
 import YearPct from "../components/YearPct/YearPct";
+import Footer from "../layout/Footer";
+import Header from "../layout/Header";
 import "../styles/Home.css";
 
 const Home = () => {
   const [scrollTimeout, setScrollTimeout] = useState(null);
+
+  // eslint-disable-next-line no-unused-vars
+  const [isHeaderVisible, setIsHeaderVisible] = useState(false); // true / false 開關 Header
 
   const sectionGridRef = useRef(null);
   const sectionPctRef = useRef(null);
@@ -63,58 +68,24 @@ const Home = () => {
   };
 
   return (
-    <div className="home-page font-noto-sans-sc">
-      <nav
-        aria-label="Section anchors"
-        style={{
-          position: "fixed",
-          zIndex: 10,
-          right: "1rem",
-          top: "1rem",
-          display: "flex",
-          gap: "0.5rem",
-          fontFamily: "Ubuntu Mono, monospace",
-        }}
-      >
-        <a
-          href="#year-grid"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToRef(sectionGridRef);
+    <div className="home-page">
+      {isHeaderVisible && (
+        <Header
+          onScrollTo={(section) => {
+            if (section === "grid") scrollToRef(sectionGridRef);
+            if (section === "pct") scrollToRef(sectionPctRef);
+            if (section === "track") scrollToRef(sectionTrackRef);
           }}
-          style={{ color: "#bbb", textDecoration: "none" }}
-        >
-          grid
-        </a>
-        <a
-          href="#year-pct"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToRef(sectionPctRef);
-          }}
-          style={{ color: "#bbb", textDecoration: "none" }}
-        >
-          percent
-        </a>
-        <a
-          href="#day-track"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToRef(sectionTrackRef);
-          }}
-          style={{ color: "#bbb", textDecoration: "none" }}
-        >
-          track
-        </a>
-      </nav>
+        />
+      )}
 
-      <main className="home-page__main">
+      <main className="home-page-main">
         <section
           id="year-grid"
           ref={sectionGridRef}
-          className="home-page__section"
+          className="home-page-section"
         >
-          <div className="home-page__card">
+          <div className="home-page-card">
             <DayOfYear />
           </div>
         </section>
@@ -122,26 +93,24 @@ const Home = () => {
         <section
           id="year-pct"
           ref={sectionPctRef}
-          className="home-page__section"
+          className="home-page-section"
         >
-          <div className="home-page__card">
+          <div className="home-page-card">
             <YearPct />
-            <p className="home-page__description">
-              Dividing the year into 100 pieces.
-            </p>
           </div>
         </section>
 
         <section
           id="day-track"
           ref={sectionTrackRef}
-          className="home-page__section"
+          className="home-page-section"
         >
-          <div className="home-page__card">
+          <div className="home-page-card">
             <DayTrack />
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   );
 };

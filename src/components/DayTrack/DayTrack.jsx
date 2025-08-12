@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./DayTrack.css";
 
 const DayTrack = () => {
@@ -16,9 +16,37 @@ const DayTrack = () => {
   })();
 
   const [value, setValue] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
-    if (value >= dayOfYear) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setHasStarted(true);
+          } else {
+            setHasStarted(false);
+            setValue(0);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      if (sectionRef.current) observer.unobserve(sectionRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!hasStarted || value >= dayOfYear) return;
+
     const intervalId = setInterval(() => {
       setValue((prev) => {
         const next = prev + 1;
@@ -28,20 +56,12 @@ const DayTrack = () => {
         }
         return next;
       });
-    }, 100);
+    }, 20);
     return () => clearInterval(intervalId);
-  }, [value, dayOfYear]);
-
-  useEffect(() => {
-    if (value !== dayOfYear) return;
-    const timeoutId = setTimeout(() => {
-      setValue(0);
-    }, 10000);
-    return () => clearTimeout(timeoutId);
-  }, [value, dayOfYear]);
+  }, [hasStarted, value, dayOfYear]);
 
   return (
-    <div className="day-track-container">
+    <div id="day-track" ref={sectionRef} className="day-track-container">
       <div className="day-track-wrapper">
         <progress max={maxDays} value={value} className="day-track-progress" />
         <div className="day-track-text">

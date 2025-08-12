@@ -17,7 +17,8 @@ const pad2 = (n) => String(n).padStart(2, "0");
 const fmtBadge = (d) => `${pad2(d.getMonth() + 1)}.${pad2(d.getDate())}`;
 
 // 根據視窗寬度決定欄數
-const pickColsByWidth = (w) => {
+const pickColsByViewport = (w, h) => {
+  if (w > h) return 28;
   if (w < 980) return 14;
   if (w < 1400) return 21;
   return 28;
@@ -45,11 +46,14 @@ const DayOfYear = () => {
 
   // ----- 響應式欄數設定 -----
   const [cols, setCols] = useState(() =>
-    pickColsByWidth(typeof window !== "undefined" ? window.innerWidth : 14)
+    typeof window !== "undefined"
+      ? pickColsByViewport(window.innerWidth, window.innerHeight)
+      : 14
   );
 
   useEffect(() => {
-    const onResize = () => setCols(pickColsByWidth(window.innerWidth));
+    const onResize = () =>
+      setCols(pickColsByViewport(window.innerWidth, window.innerHeight));
     onResize();
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
@@ -78,7 +82,8 @@ const DayOfYear = () => {
   };
 
   // ----- days left 數字動畫 -----
-  const targetLeft = isPreview ? totalDays - hoverTarget : daysLeft;
+  const isHovering = hoverDay != null;
+  const targetLeft = isHovering ? totalDays - hoverDay : daysLeft;
   const [animatedLeft, setAnimatedLeft] = useState(targetLeft);
 
   useEffect(() => {
@@ -86,7 +91,7 @@ const DayOfYear = () => {
     const start = performance.now();
     const from = animatedLeft;
     const to = targetLeft;
-    const dur = isPreview ? 120 : 200;
+    const dur = isHovering ? 120 : 200;
     const ease = (t) => 1 - Math.pow(1 - t, 3);
     const step = (ts) => {
       const t = Math.min(1, (ts - start) / dur);
@@ -96,7 +101,7 @@ const DayOfYear = () => {
     raf = requestAnimationFrame(step);
     return () => cancelAnimationFrame(raf);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [targetLeft, isPreview]);
+  }, [targetLeft, isHovering]);
 
   // ----- 計算提示框顯示文字 -----
   const hoverLabel =
@@ -180,8 +185,8 @@ const DayOfYear = () => {
                   cell.day <= displayIndex
                     ? {
                         ["--delay"]: isPreview
-                          ? `${Math.max(cell.day - todayIndex, 0) * 20}ms`
-                          : `${(cell.day - 1) * 20}ms`,
+                          ? `${Math.max(cell.day - todayIndex, 0) * 10}ms`
+                          : `${(cell.day - 1) * 10}ms`,
                       }
                     : undefined
                 }

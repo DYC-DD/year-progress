@@ -1,43 +1,55 @@
-# Year_Progress_Bar 年度進度條
+```
+                  tttt            iiii
+                ttt:::t           i::::i
+                t:::::t            iiii
+                t:::::t
+          ttttttt:::::ttttttt    iiiiiii    mmmmmmm    mmmmmmm       eeeeeeeeeeee
+          t:::::::::::::::::t    i:::::i  mm:::::::m  m:::::::mm   ee::::::::::::ee
+          t:::::::::::::::::t     i::::i m::::::::::mm::::::::::m e::::::eeeee:::::ee
+          tttttt:::::::tttttt     i::::i m::::::::::::::::::::::me::::::e     e:::::e
+                t:::::t           i::::i m:::::mmm::::::mmm:::::me:::::::eeeee::::::e
+                t:::::t           i::::i m::::m   m::::m   m::::me:::::::::::::::::e
+                t:::::t           i::::i m::::m   m::::m   m::::me::::::eeeeeeeeeee
+                t:::::t    tttttt i::::i m::::m   m::::m   m::::me:::::::e
+                t::::::tttt:::::ti::::::im::::m   m::::m   m::::me::::::::e
+                tt::::::::::::::ti::::::im::::m   m::::m   m::::m e::::::::eeeeeeee
+                  tt:::::::::::tti::::::im::::m   m::::m   m::::m  ee:::::::::::::e
+                    ttttttttttt  iiiiiiiimmmmmm   mmmmmm   mmmmmm    eeeeeeeeeeeeee
 
-**Year Progress Bar** 是一個直觀的時間進度查詢工具，讓使用者隨時掌握當前年份的完成比例。透過 React 框架構建前端頁面，使用者可即時查看今年已過天數與剩餘天數，並透過視覺化的進度條呈現當前時間進展。
 
----
+                                          iiii
+                                        i::::i
+                                          iiii
 
-## 功能特色
+                                        iiiiiii     ssssssssss
+                                        i:::::i   ss::::::::::s
+                                        i::::i ss:::::::::::::s
+                                        i::::i s::::::ssss:::::s
+                                        i::::i  s:::::s  ssssss
+                                        i::::i    s::::::s
+                                        i::::i       s::::::s
+                                        i::::i ssssss   s:::::s
+                                        i::::::is:::::ssss::::::s
+                                        i::::::is::::::::::::::s
+                                        i::::::i s:::::::::::ss
+                                        iiiiiiii  sssssssssss
 
-- 動態計算年度進度
-  - 根據當前年份計算總天數（支援閏年）。
-  - 即時計算 **已過天數** 與 **剩餘天數**，並顯示百分比。
-- 視覺化進度條
-  - 透過直觀的 **進度條** 顯示今年的完成度。
-  - 進度條隨時間變化，每天 **自動更新**。
-- 簡潔易讀的資訊顯示
-  - 顯示 **當前年份**、**已過天數**、**總天數**、**百分比數值**。
-  - 讓使用者快速掌握時間進展。
 
----
-
-## 技術細節
-
-- **前端技術**：使用 **React** 框架構建動態頁面。
-- **即時數據計算**：利用 **JavaScript Date API** 獲取當前年份與天數，確保數據準確性。
-- **自動更新**：每次刷新或訪問頁面時，**自動重新計算** 當前進度。
-- **部署**：透過 **GitHub Pages** 發佈靜態網站，讓使用者隨時存取。
-
----
-
-## 用戶體驗與分析
-
-- Google Analytics 整合
-  - 追蹤網站流量與使用者互動行為。
-  - 分析用戶 **停留時間** 與 **查詢頻率**，優化頁面體驗。
-- 跨裝置支援
-  - **完全響應式設計**，適用於桌機、平板與手機。
-
----
-
-## 未來計劃
-
-- 支援月與週的進度顯示，讓使用者更細緻掌握時間規劃。
-- 加入動畫效果：為進度條增加動畫過渡，提升視覺體驗。
+   mmmmmmm    mmmmmmm      ooooooooooo   nnnn  nnnnnnnn        eeeeeeeeeeee    yyyyyyy           yyyyyyy
+ mm:::::::m  m:::::::mm  oo:::::::::::oo n:::nn::::::::nn    ee::::::::::::ee   y:::::y         y:::::y
+m::::::::::mm::::::::::mo:::::::::::::::on::::::::::::::nn  e::::::eeeee:::::ee  y:::::y       y:::::y
+m::::::::::::::::::::::mo:::::ooooo:::::onn:::::::::::::::ne::::::e     e:::::e   y:::::y     y:::::y
+m:::::mmm::::::mmm:::::mo::::o     o::::o  n:::::nnnn:::::ne:::::::eeeee::::::e    y:::::y   y:::::y
+m::::m   m::::m   m::::mo::::o     o::::o  n::::n    n::::ne:::::::::::::::::e      y:::::y y:::::y
+m::::m   m::::m   m::::mo::::o     o::::o  n::::n    n::::ne::::::eeeeeeeeeee        y:::::y:::::y
+m::::m   m::::m   m::::mo::::o     o::::o  n::::n    n::::ne:::::::e                  y:::::::::y
+m::::m   m::::m   m::::mo:::::ooooo:::::o  n::::n    n::::ne::::::::e                  y:::::::y
+m::::m   m::::m   m::::mo:::::::::::::::o  n::::n    n::::n e::::::::eeeeeeee           y:::::y
+m::::m   m::::m   m::::m oo:::::::::::oo   n::::n    n::::n  ee:::::::::::::e          y:::::y
+mmmmmm   mmmmmm   mmmmmm   ooooooooooo     nnnnnn    nnnnnn    eeeeeeeeeeeeee         y:::::y
+                                                                                     y:::::y
+                                                                                    y:::::y
+                                                                                   y:::::y
+                                                                                  y:::::y
+                                                                                 yyyyyyy
+```
