@@ -1,8 +1,8 @@
-import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
 
 export default defineConfig({
-  base: "/YearProgressBar/",
+  base: "/year-progress/",
   plugins: [react()],
   server: {
     open: true,

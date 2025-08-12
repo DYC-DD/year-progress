@@ -1,9 +1,9 @@
 import React from "react";
 import {
+  Navigate,
+  Route,
   BrowserRouter as Router,
   Routes,
-  Route,
-  Navigate,
 } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 

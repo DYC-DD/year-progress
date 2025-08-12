@@ -1,46 +1,22 @@
-@import url("https://fonts.googleapis.com/css?family=Ubuntu+Mono:700");
-
-.font-noto-sans-sc {
-  font-family: "Noto Sans SC", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  height: 100%;
-}
-
-body {
-  margin: 0;
-  font: 100%/1.5 system-ui;
-  overflow-x: hidden;
-}
-
 .home-page {
   background: #ffffff;
 }
 
-.home-page__main {
+.home-page-main {
   margin-inline: auto;
   padding: 0 2rem;
   transition: 0.4s;
   background: #000000;
 }
 
-.home-page__section {
+.home-page-section {
   position: relative;
   min-height: 100svh;
   height: 100dvh;
   margin: 0;
 }
 
-.home-page__card {
+.home-page-card {
   min-height: 100svh;
   height: 100dvh;
   display: flex;
@@ -51,16 +27,9 @@ body {
   text-align: center;
 }
 
-.home-page__section:first-of-type .home-page__card,
-.home-page__section:last-of-type .home-page__card {
+.home-page-section:first-of-type .home-page-card,
+.home-page-section:last-of-type .home-page-card {
   justify-content: center;
-}
-
-.home-page__description {
-  margin: 0;
-  color: #585858;
-  font-size: 24px;
-  font-family: "Ubuntu Mono", sans-serif;
 }
 
 @keyframes blink-caret {
@@ -73,11 +42,21 @@ body {
   h1 {
     font-size: 40px;
   }
-  .home-page__description {
-    width: 90%;
-    font-size: 16px;
-  }
   .annotation {
     font-size: 10px;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 420px) {
+  .home-page-main {
+    padding: 0 1rem;
+  }
+  .home-page-section,
+  .home-page-card {
+    min-height: 100svh;
+    height: 100dvh;
+  }
+  .home-page-card {
+    gap: 0.5rem;
   }
 }
