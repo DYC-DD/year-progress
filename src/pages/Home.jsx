@@ -1,123 +1,116 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import DayOfYear from "../components/DayOfYear/DayOfYear";
+import DayTrack from "../components/DayTrack/DayTrack";
+import YearPct from "../components/YearPct/YearPct";
+import Footer from "../layout/Footer";
+import Header from "../layout/Header";
 import "../styles/Home.css";
-import ProgressBar from "../components/ProgressBar";
-import ProgressBar2 from "../components/ProgressBar2";
 
 const Home = () => {
   const [scrollTimeout, setScrollTimeout] = useState(null);
-  const [footerText, setFooterText] = useState("Time is money.");
 
-  const footerTexts = [
-    `“Time is money.”`,
-    `“Time waits for no one.”`,
-    `“Lost time is never found again.”`,
-    `“Make time, not excuses.”`,
-    `“Time is more valuable than money.”`,
-    `“Time is life.”`,
-    `“Nothing is more valuable than time.”`,
-    `“Time once lost, is lost forever.”`,
-    `“Time is wealth.”`,
-    `“Every moment is a fresh beginning.”`,
-    `“Wasting time is stealing from yourself.”`,
-  ];
+  // eslint-disable-next-line no-unused-vars
+  const [isHeaderVisible, setIsHeaderVisible] = useState(false); // true / false 開關 Header
 
-  const section1Ref = useRef(null);
-  const section2Ref = useRef(null);
-  const section3Ref = useRef(null);
+  const sectionGridRef = useRef(null);
+  const sectionPctRef = useRef(null);
+  const sectionTrackRef = useRef(null);
 
-  // 偵測 footer 是否進入視窗，變更 footer 文字
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const randomIndex = Math.floor(Math.random() * footerTexts.length);
-            setFooterText(footerTexts[randomIndex]);
-          }
-          document.body.classList.toggle("footer-pull", entry.isIntersecting);
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    const footer = document.querySelector("#footer");
-    if (footer) observer.observe(footer);
-
-    return () => {
-      if (footer) observer.unobserve(footer);
-    };
-  }, []);
-
-  // 當停止滾動後，自動對齊最近的區塊
   useEffect(() => {
     const handleScroll = () => {
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout);
-      }
-      const newTimeout = setTimeout(() => {
-        snapToNearestSection();
-      }, 200);
-      setScrollTimeout(newTimeout);
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      const t = setTimeout(() => snapToNearestSection(), 200);
+      setScrollTimeout(t);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
       if (scrollTimeout) clearTimeout(scrollTimeout);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scrollTimeout]);
 
-  const snapToNearestSection = () => {
-    if (!section1Ref.current || !section2Ref.current || !section3Ref.current)
-      return;
-
-    const scrollY = window.scrollY;
-    const sections = [
-      section1Ref.current.offsetTop,
-      section2Ref.current.offsetTop,
-      section3Ref.current.offsetTop,
+  const sectionsTops = () => {
+    const arr = [
+      sectionGridRef.current?.offsetTop ?? 0,
+      sectionPctRef.current?.offsetTop ?? 0,
+      sectionTrackRef.current?.offsetTop ?? 0,
     ];
+    return arr;
+  };
+
+  const snapToNearestSection = () => {
+    if (
+      !sectionGridRef.current ||
+      !sectionPctRef.current ||
+      !sectionTrackRef.current
+    )
+      return;
+    const scrollY = window.scrollY;
+    const tops = sectionsTops();
 
     let closestIndex = 0;
     let minDistance = Infinity;
-
-    sections.forEach((offset, index) => {
-      const distance = Math.abs(scrollY - offset);
-      if (distance < minDistance) {
-        minDistance = distance;
-        closestIndex = index;
+    tops.forEach((top, i) => {
+      const d = Math.abs(scrollY - top);
+      if (d < minDistance) {
+        minDistance = d;
+        closestIndex = i;
       }
     });
 
-    window.scrollTo({
-      top: sections[closestIndex],
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: tops[closestIndex], behavior: "smooth" });
+  };
+
+  const scrollToRef = (ref) => {
+    const top = ref.current?.offsetTop ?? 0;
+    window.scrollTo({ top, behavior: "smooth" });
   };
 
   return (
-    <div className="home noto-sans-sc">
-      <main>
-        <section ref={section1Ref} className="snap-section">
-          <div className="card-content">
-            <ProgressBar2 />
-            <p>Dividing the year into 100 pieces.</p>
-          </div>
-        </section>
+    <div className="home-page">
+      {isHeaderVisible && (
+        <Header
+          onScrollTo={(section) => {
+            if (section === "grid") scrollToRef(sectionGridRef);
+            if (section === "pct") scrollToRef(sectionPctRef);
+            if (section === "track") scrollToRef(sectionTrackRef);
+          }}
+        />
+      )}
 
-        <section ref={section2Ref} className="snap-section">
-          <div className="card-content">
-            <ProgressBar />
+      <main className="home-page-main">
+        <section
+          id="year-grid"
+          ref={sectionGridRef}
+          className="home-page-section"
+        >
+          <div className="home-page-card">
+            <DayOfYear />
           </div>
         </section>
 
         <section
-          ref={section3Ref}
-          className="snap-section"
-          style={{ height: "100vh" }}
-        ></section>
+          id="year-pct"
+          ref={sectionPctRef}
+          className="home-page-section"
+        >
+          <div className="home-page-card">
+            <YearPct />
+          </div>
+        </section>
+
+        <section
+          id="day-track"
+          ref={sectionTrackRef}
+          className="home-page-section"
+        >
+          <div className="home-page-card">
+            <DayTrack />
+          </div>
+        </section>
       </main>
-      <footer id="footer">{footerText}</footer>
+      <Footer />
     </div>
   );
 };

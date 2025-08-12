@@ -1,0 +1,63 @@
+.year-pct-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.year-pct-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 80%;
+  height: 40px;
+  padding: 5px;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+}
+
+.year-pct-bar {
+  background: #fff;
+  border-radius: 100px;
+  height: 30px;
+  transition: width 2s ease-in-out;
+  box-shadow: 0 0 15px #505050, 0 0 30px #808080, 0 0 60px #bbbbbb;
+  flex: 0 0 auto;
+}
+
+.year-pct-text {
+  position: absolute;
+  right: 10px;
+  color: #fff;
+  font-size: 30px;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.year-pct-description {
+  margin: 10px 0 0;
+  color: #585858;
+  font-size: 24px;
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .year-pct-container {
+    width: 100%;
+    height: 26px;
+  }
+  .year-pct-bar {
+    height: 16px;
+  }
+  .year-pct-text {
+    font-size: 16px;
+    font-weight: 400;
+    right: 10px;
+  }
+  .year-pct-description {
+    width: 90%;
+    font-size: 12px;
+  }
+}

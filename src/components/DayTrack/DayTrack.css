@@ -1,46 +1,41 @@
-@import url("https://fonts.googleapis.com/css?family=Ubuntu+Mono:700");
-
-.progress-container {
+.day-track-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 50px;
-  height: 100vh;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
 }
 
-.progress-wrapper {
+.day-track-wrapper {
   position: relative;
+  width: min(900px, 90%);
+  margin: 0 auto;
 }
 
-.my-progress {
+.day-track-progress {
   appearance: none;
-  width: 600px;
+  width: 100%;
   height: 1.5em;
   border: none;
   padding: 0;
-  font-family: "Ubuntu Mono", sans-serif;
   font-size: 80px;
 }
 
-.my-progress::-webkit-progress-bar,
-.my-progress::-webkit-progress-value {
+.day-track-progress::-webkit-progress-bar,
+.day-track-progress::-webkit-progress-value {
   background: transparent;
 }
 
-.progress-text {
+.day-track-text {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   white-space: nowrap;
-  font-family: "Ubuntu Mono", sans-serif;
-  font-size: 10em;
+  font-weight: 700;
+  font-size: clamp(48px, 12vw, 160px);
   color: #ffffff;
   text-shadow: 0 0 15px #505050, 0 0 30px #808080, 0 0 60px #bbbbbb;
   user-select: none;
@@ -51,14 +46,24 @@
 }
 
 @media screen and (max-width: 768px) {
-  .progress-container {
-    padding: 20px;
-  }
-  .my-progress {
+  .day-track-wrapper {
     width: 90%;
+  }
+  .day-track-progress {
+    height: 1.2em;
     font-size: 40px;
   }
-  .progress-text {
-    font-size: 5em;
+}
+
+@media (orientation: landscape) and (max-height: 420px) {
+  .day-track-wrapper {
+    width: 94%;
+  }
+  .day-track-progress {
+    height: 0.9em;
+    font-size: 28px;
+  }
+  .day-track-text {
+    font-size: clamp(28px, 10vw, 96px);
   }
 }

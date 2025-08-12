@@ -1,0 +1,16 @@
+.footer {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  color: #101010;
+  font-size: 0.9rem;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+
+.footer:hover {
+  color: #202020;
+}
