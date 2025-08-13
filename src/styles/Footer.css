@@ -14,3 +14,9 @@
 .footer:hover {
   color: #202020;
 }
+
+@media (max-width: 768px) {
+  .footer {
+    font-size: 0.8rem;
+  }
+}

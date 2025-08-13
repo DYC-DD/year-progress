@@ -80,6 +80,7 @@
   pointer-events: none;
   user-select: none;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  z-index: 9999;
 }
 
 .doy-overlay {
@@ -211,41 +212,40 @@
     font-size: var(--head-fs);
   }
   .doy[data-cols="14"] .doy-grid-box {
-    --gap: 20px;
+    --gap: 16px;
     --size: 4px;
-    --head-fs: 10px;
+    --head-fs: 8px;
   }
   .doy-year {
     top: -28px;
-    font-size: 1.4rem;
+    font-size: 1rem;
   }
   .doy-right {
-    bottom: -28px;
+    bottom: 0px;
   }
   .doy-left-num {
-    font-size: 1.2rem;
+    font-size: 0.8rem;
   }
   .doy-left-text {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 }
 
-/* 橫向手機專屬：28 欄時縮小點與間距 */
 @media (orientation: landscape) and (max-height: 500px) {
   .doy[data-cols="28"] .doy-grid-box {
     --gap: 16px;
     --size: 4px;
-    --head-fs: 10px;
+    --head-fs: 8px;
   }
   .doy-year {
     top: -14px;
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
   .doy-right {
-    bottom: -14px;
+    bottom: -8px;
   }
   .doy-left-num {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
   .doy-left-text {
     font-size: 0.8rem;
