@@ -62,11 +62,31 @@ const DayOfYear = () => {
   const weeksPerRow = cols / 7;
   const rows = Math.ceil((startDow + totalDays) / cols);
 
+  // ----- 進出視窗時重播 -----
+  const [playIndex, setPlayIndex] = useState(0);
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          setPlayIndex(todayIndex);
+        } else {
+          setPlayIndex(0);
+        }
+      },
+      { threshold: 0.6 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [todayIndex]);
+
   // ----- 滑鼠懸停與提示框狀態 -----
   const [hoverDay, setHoverDay] = useState(null);
   const [hoverTarget, setHoverTarget] = useState(null);
   const isPreview = hoverTarget != null;
-  const displayIndex = isPreview ? hoverTarget : todayIndex;
+  const displayIndex = isPreview ? hoverTarget : playIndex;
 
   const [tip, setTip] = useState({ x: 0, y: 0, visible: false });
   const onGridMouseMove = (e) => {
